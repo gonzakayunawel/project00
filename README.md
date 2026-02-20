@@ -67,9 +67,7 @@ CREATE TABLE employees (
 To start the FastMCP server, run the following command in your terminal:
 
 ```bash
-# TODO: Confirm the exact run command for a FastMCP server.
-# It might be something like this:
-fastmcp run
+fastmcp run main.py:app
 ```
 
 ## Available Tools
