@@ -10,11 +10,46 @@ This project is a FastMCP server application that provides tools to interact wit
 ## Technologies Used
 
 *   **Python 3.13+**
+*   **Docker & Docker Compose**
 *   **FastMCP:** The core framework for creating the tool server.
 *   **PostgreSQL:** The database used to store employee data.
 *   **Psycopg2:** The PostgreSQL adapter for Python.
 
-## Getting Started
+## Local Deployment with Docker (Recommended)
+
+This is the easiest way to get the entire environment, including the database and the application, up and running.
+
+### Prerequisites
+
+*   Docker
+*   Docker Compose
+
+### Running the Application
+
+1.  **Start the services:**
+    From the root of the project, run the following command:
+    ```bash
+    docker-compose up --build
+    ```
+    This command will:
+    *   Build the Docker image for the FastMCP application.
+    *   Start a PostgreSQL database container.
+    *   Start the FastMCP server container.
+    *   Initialize the database with the schema and sample data from `init.sql`.
+
+2.  **Access the server:**
+    The FastMCP server will be running and accessible. The API will be available on port `3000`. The PostgreSQL database will be available on port `5432` on your local machine.
+
+### Stopping the Application
+
+To stop all the running containers, press `Ctrl+C` in the terminal where `docker-compose` is running, or run the following command from another terminal:
+```bash
+docker-compose down
+```
+
+## Manual Local Setup
+
+If you prefer to run the application without Docker, you can follow these steps.
 
 ### Prerequisites
 
@@ -44,23 +79,6 @@ The application requires the following environment variables to be set for the d
 *   `DB_USER`: The username for the database connection.
 *   `DB_PASSWORD`: The password for the database connection.
 *   `DB_NAME`: The name of the database to connect to.
-
-You can set these in your shell or use a `.env` file.
-
-### Database Schema
-
-The application expects an `employees` table with the following structure:
-
-```sql
-CREATE TABLE employees (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    position VARCHAR(255),
-    department VARCHAR(255),
-    salary NUMERIC(10, 2),
-    hire_date DATE
-);
-```
 
 ### Running the Application
 
