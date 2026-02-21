@@ -21,4 +21,4 @@ EXPOSE 3000
 
 # Assumes `fastmcp run` is the correct command to start the server.
 # This may need to be adjusted based on FastMCP's documentation.
-CMD ["uv", "run", "fastmcp", "run", "main.py:app"]
+CMD ["uv", "run", "fastmcp", "run", "main.py:app", "--transport", "sse", "--host", "0.0.0.0", "--port", "3000"]
