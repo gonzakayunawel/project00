@@ -47,6 +47,32 @@ To stop all the running containers, press `Ctrl+C` in the terminal where `docker
 docker-compose down
 ```
 
+### Adding the MCP Server to your AI Agent (Local Docker)
+
+To connect your AI agent (like Claude Desktop or Cursor) to the server while running locally with Docker, add the following configuration to your MCP client's configuration file (e.g., `claude_desktop_config.json`). This allows the agent to communicate with the service already running inside your local container:
+
+```json
+{
+  "mcpServers": {
+    "company-db-docker": {
+      "command": "docker",
+      "args": [
+        "exec",
+        "-i",
+        "company_mcp_server",
+        "uv",
+        "run",
+        "fastmcp",
+        "run",
+        "main.py:app"
+      ]
+    }
+  }
+}
+```
+
+**Note:** This configuration is designed for **local use only**. Ensure the containers are running (`docker-compose up`) before trying to use the tools from your AI agent.
+
 ## Manual Local Setup
 
 If you prefer to run the application without Docker, you can follow these steps.
@@ -87,6 +113,37 @@ To start the FastMCP server, run the following command in your terminal:
 ```bash
 fastmcp run main.py:app
 ```
+
+### Adding the MCP Server to your AI Agent (Local Manual)
+
+If you are running the server locally without Docker, add this configuration to your AI agent. This setup is also for **local use only**:
+
+```json
+{
+  "mcpServers": {
+    "company-db-local": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/absolute/path/to/project00",
+        "run",
+        "fastmcp",
+        "run",
+        "main.py:app"
+      ],
+      "env": {
+        "DB_HOST": "localhost",
+        "DB_PORT": "5432",
+        "DB_USER": "your_user",
+        "DB_PASSWORD": "your_password",
+        "DB_NAME": "your_db"
+      }
+    }
+  }
+}
+```
+
+**Note:** Replace `/absolute/path/to/project00` with the actual path on your machine. Ensure your local PostgreSQL is running and your environment variables are correctly configured.
 
 ## Available Tools
 
