@@ -1,5 +1,10 @@
 FROM python:3.13-slim
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 
 WORKDIR /app
@@ -16,4 +21,4 @@ EXPOSE 3000
 
 # Assumes `fastmcp run` is the correct command to start the server.
 # This may need to be adjusted based on FastMCP's documentation.
-CMD ["fastmcp", "run", "main.py:app"]
+CMD ["uv", "run", "fastmcp", "run", "main.py:app"]
